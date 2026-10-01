@@ -38,8 +38,11 @@ die()  { printf '\n✗ %s\n' "$1" >&2; exit 1; }
 cd "$ROOT"
 
 step "Sync with GitHub"
-[ -z "$(git status --porcelain)" ] || die "Uncommitted changes — commit or stash first:
-$(git status --short)"
+# Edited tracked files anywhere, or new files under web/ (they would deploy
+# without being in git). Unrelated untracked folders next to web/ are fine.
+DIRTY="$(git status --porcelain --untracked-files=no; git status --porcelain -- web scripts | grep '^??' || true)"
+[ -z "$DIRTY" ] || die "Uncommitted changes — commit or stash first:
+$DIRTY"
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 [ "$BRANCH" = "main" ] || die "On branch '$BRANCH' — deploys go from main (git checkout main)"
 git pull --ff-only origin main
