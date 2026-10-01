@@ -22,17 +22,16 @@ next page load.
 
 **Local mirror / dev copy:** `/Users/bryan/Developer/MakerVault/web/`.
 Develop and test here (`php -S 127.0.0.1:8743 -t web` from the repo root, or
-the `makervault-web` entry in `.claude/launch.json`), then rsync to the NAS:
+the `makervault-web` entry in `.claude/launch.json`), then deploy to the NAS:
 
 ```bash
-cd /Users/bryan/Developer/MakerVault/web
-rsync -av --exclude '.DS_Store' \
-  --exclude 'data/' \
-  ./ /Volumes/web/MakerVault/
+cd ~/Developer/MakerVault
+scripts/bump-version.sh 3.x.y-beta && git commit -am "…" && git push
+scripts/deploy.sh
 ```
 
 **Careful with `data/`** — once the NAS copy is live, the NAS database is the
-source of truth. The rsync above excludes it. Only copy `data/` on first
+source of truth. `deploy.sh` never copies it. Only copy `data/` on first
 deploy or when intentionally restoring.
 
 ## Architecture

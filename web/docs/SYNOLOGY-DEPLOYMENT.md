@@ -92,15 +92,25 @@ versus the binder's read-only 755/644.)
 From the dev copy on the Mac:
 
 ```bash
-cd /Users/bryan/Developer/MakerVault/web
-rsync -av --exclude '.DS_Store' --exclude 'data/' ./ /Volumes/web/MakerVault/
+cd ~/Developer/MakerVault
+scripts/bump-version.sh 3.x.y-beta   # if anything in web/ changed
+git commit -am "…" && git push
+scripts/deploy.sh                    # --dry-run to preview
+```
+
+`deploy.sh` does the rsync below for you, plus checks, NAS mounting,
+a version guard, and a post-deploy health check. Manual fallback:
+
+```bash
+rsync -av --exclude '.DS_Store' --exclude 'data/' web/ /Volumes/web/MakerVault/
 ```
 
 **Always exclude `data/`** — the NAS database is live and authoritative once
 deployed. Overwriting it with the dev copy loses real edits.
 
-After JS/CSS changes, bump the `?v=` cache-buster query strings in
-`index.html` so browsers pick up the new files.
+After any change, `scripts/bump-version.sh` bumps the `?v=` busters and
+`MV_SW_VERSION` together so installed clients pick up the new files;
+`deploy.sh` refuses to ship without it.
 
 ## Data directory exposure (worth knowing)
 

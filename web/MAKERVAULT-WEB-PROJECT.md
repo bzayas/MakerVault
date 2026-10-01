@@ -253,7 +253,7 @@ and `MV_SW_VERSION` are at **16/v16**, `MV_VERSION` 3.9.0-beta.
   the Xcode project, `SampleData/`, `build/`, and `.venv/` are gone from
   the tree. Verified byte-identical archive at
   `archive/legacy-native-app-2026-07-20.tar.gz` (see `archive/README.md`)
-  — **this repo is not under version control, so nothing was hard-deleted
+  — **this repo was not under version control at the time, so nothing was hard-deleted
   without an archive.** Nothing in `web/` referenced them except three
   provenance comments. Repo went from ~264 MB to ~14 MB.
 - **`.graphifyignore` added** so the knowledge graph reflects our code:
@@ -308,10 +308,14 @@ test 3.12.0.)
 - Edit `~/Developer/MakerVault/web/`, test with launch.json entry
   `makervault-web` (php -S on :8743, uses the LOCAL data/ testbed)
 - `php -l` + `node --check` after edits
-- **Every deploy: bump `?v=` busters in index.html AND `MV_SW_VERSION`
-  in sw.js together** (both at 13/v13 now), bump MV_VERSION in
-  api/_bootstrap.php, then
-  `rsync -av --exclude '.DS_Store' --exclude 'data/' ./ /Volumes/web/MakerVault/`
+- **Git + GitHub since 2026-10-01** (`bzayas/MakerVault`, public — `web/data/`
+  is gitignored). CI runs `scripts/check.sh` on every push/PR.
+- **Release:** `scripts/bump-version.sh 3.x.y-beta` (busters + `MV_SW_VERSION`
+  + `MV_VERSION` in lockstep), commit, push
+- **Deploy:** `scripts/deploy.sh` — pulls main, runs checks, mounts the NAS
+  share (recovers stale SMB handles), refuses changed files under an
+  unchanged SW version, rsyncs excluding `data/`, verifies health.php,
+  tags the release. `--dry-run` previews.
 - Never touch `data/` on the NAS — it's the live database
 - Clients self-update (SW auto-reload on new version)
 - Mobile checks: resize Browser pane to 402×874 (iPhone 17 Pro); the
@@ -624,10 +628,10 @@ Full-codebase review; fixed and verified:
 1. Edit in `/Users/bryan/Developer/MakerVault/web/`
 2. Test locally: `php -S 127.0.0.1:8743 -t web` (repo root) — uses the LOCAL
    `web/data/makervault.db`, so tests never touch live NAS data
-3. `php -l api/*.php` after PHP changes
-4. Bump `?v=` cache busters in `index.html` when JS/CSS change
-5. Deploy: `rsync -av --exclude '.DS_Store' --exclude 'data/' web/ /Volumes/web/MakerVault/`
-6. Verify `http://<nas-ip>:8742/api/health.php` and click through the UI
+3. `scripts/check.sh` — lint, version lockstep, smoke test, parser harness
+4. `scripts/bump-version.sh <version>`, commit, push to GitHub
+5. `scripts/deploy.sh` — checks, rsync to the NAS (never `data/`), health check, tag
+6. Click through the UI
 
 See `docs/SYNOLOGY-DEPLOYMENT.md` for Web Station setup, permissions,
 HTTPS, backups, and troubleshooting.
