@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16181d" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f2f3f5" media="(prefers-color-scheme: light)">
+<title>MakerVault</title>
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/app.css?v=23">
+</head>
+<body>
+
+<div id="shell">
+  <aside id="sidebar">
+    <div class="brand">
+      <span class="brand-icon">🗄️</span>
+      <span class="brand-name">MakerVault</span>
+      <span class="brand-badge">beta</span>
+    </div>
+    <nav id="nav">
+      <a href="#/dashboard" data-view="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="#/inventory" data-view="inventory"><span class="nav-icon">📦</span> Inventory</a>
+      <a href="#/locations" data-view="locations"><span class="nav-icon">🗺️</span> Locations</a>
+      <a href="#/labels" data-view="labels" class="nav-secondary"><span class="nav-icon">🏷️</span> Labels</a>
+      <a href="#/scanner" data-view="scanner"><span class="nav-icon">📷</span> Scan</a>
+      <a href="#/printers" data-view="printers" class="nav-secondary"><span class="nav-icon">🖨️</span> Printers</a>
+      <a href="#/import" data-view="import" class="nav-secondary"><span class="nav-icon">📥</span> Import</a>
+      <a href="#/bom" data-view="bom" class="nav-secondary"><span class="nav-icon">📋</span> BOM</a>
+      <a href="#/activity" data-view="activity" class="nav-secondary"><span class="nav-icon">🕘</span> Activity</a>
+      <a href="#/reports" data-view="reports" class="nav-secondary"><span class="nav-icon">📈</span> Reports</a>
+      <a href="#/settings" data-view="settings"><span class="nav-icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer" id="sidebar-footer"></div>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+
+<script src="js/vendor/qrcode.js?v=23"></script>
+<script src="js/api.js?v=23"></script>
+<script src="js/ui.js?v=23"></script>
+<script src="js/labelgen.js?v=23"></script>
+<script src="js/parsers.js?v=23"></script>
+<script src="js/dashboard.js?v=23"></script>
+<script src="js/reports.js?v=23"></script>
+<script src="js/inventory.js?v=23"></script>
+<script src="js/locations.js?v=23"></script>
+<script src="js/labexport.js?v=23"></script>
+<script src="js/labels.js?v=23"></script>
+<script src="js/scanner.js?v=23"></script>
+<script src="js/printers.js?v=23"></script>
+<script src="js/imports.js?v=23"></script>
+<script src="js/bom.js?v=23"></script>
+<script src="js/duplicates.js?v=23"></script>
+<script src="js/activity.js?v=23"></script>
+<script src="js/categories.js?v=23"></script>
+<script src="js/settings.js?v=23"></script>
+<script src="js/app.js?v=23"></script>
+</body>
+</html>
