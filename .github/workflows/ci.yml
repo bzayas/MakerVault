@@ -18,3 +18,6 @@ jobs:
         with:
           node-version: '22'
       - run: scripts/check.sh
+      - name: Docs style check (warnings only)
+        run: python3 scripts/lint-docs.py
+        continue-on-error: true

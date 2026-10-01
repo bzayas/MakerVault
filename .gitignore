@@ -1,3 +1,22 @@
+# Runtime data: the live database, photos, attachments, sample invoices
 web/data/
+
+# Never commit a database or a backup export (this repository is public)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+makervault-backup-*.json
+makervault-items-*.csv
+
+# Local folders that sit next to web/ on the Mac but aren't part of MakerVault
+/archive/
+/graphify-out/
+/.graphifyignore
+/card-box-divider/
+/stl-stack-builder/
+/ultimate-bin-generator/
+
+# Tooling
 .DS_Store
 node_modules/
